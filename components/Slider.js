@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Image from './Image';
 import Navigation from './Slider/Navigation';
 import Link from './Link';
-import rem from '../utils/rem';
 import { headerFont } from '../utils/fonts';
 
 const NavWidth = 192;
@@ -19,6 +18,9 @@ const ScreenMultipliers = {
 
 const Wrapper = styled.div`
   width: 100%;
+  @media screen and (min-width: 800px) and (min-height: 421px) {
+    margin-top: -32px;
+  }
 `;
 
 const Section = styled.section`
@@ -28,9 +30,6 @@ const Section = styled.section`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  overflow-x: hidden;
-  overflow-y: visible;
-  padding-top: 32px;
 `;
 
 const Nav = styled.div`
@@ -65,7 +64,7 @@ const Nav = styled.div`
   ${props =>
     props.prev
       ? `
-    margin-left: -${NavOffset * ScreenMultipliers.xs}px;        
+    margin-left: -${NavOffset * ScreenMultipliers.xs}px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     &:hover {
@@ -79,7 +78,7 @@ const Nav = styled.div`
         transform: translateX(${NavOffset * ScreenMultipliers.sm}px);
       }
     }
-    
+
     @media screen and (min-width: 800px) and (min-height: 421px) {
       margin-left: -${NavOffset * ScreenMultipliers.md}px;
 
@@ -87,7 +86,7 @@ const Nav = styled.div`
         transform: translateX(${NavOffset * ScreenMultipliers.md}px);
       }
     }
-    
+
     @media screen and (min-width: 1280px) and (min-height: 421px) {
       margin-left: -${NavOffset * ScreenMultipliers.lg}px;
 
@@ -97,7 +96,7 @@ const Nav = styled.div`
     }
   `
       : `
-    margin-right: -${NavOffset * ScreenMultipliers.xs}px;          
+    margin-right: -${NavOffset * ScreenMultipliers.xs}px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     &:hover {
@@ -111,7 +110,7 @@ const Nav = styled.div`
         transform: translateX(-${NavOffset * ScreenMultipliers.sm}px);
       }
     }
-    
+
     @media screen and (min-width: 800px) and (min-height: 421px) {
       margin-right: -${NavOffset * ScreenMultipliers.md}px;
 
@@ -119,7 +118,7 @@ const Nav = styled.div`
         transform: translateX(-${NavOffset * ScreenMultipliers.md}px);
       }
     }
-    
+
     @media screen and (min-width: 1280px) and (min-height: 421px) {
       margin-right: -${NavOffset * ScreenMultipliers.lg}px;
 
@@ -144,7 +143,7 @@ const Body = styled.div`
   }
 
   @media screen and (min-width: 1280px) and (min-height: 421px) {
-    width: calc(100% - ${NavWidth * ScreenMultipliers.lg * 2}px);
+    width: calc(100% - ${NavWidth * ScreenMultipliers.lg * 3}px);
   }
 `;
 
@@ -176,35 +175,30 @@ const ImageSlider = styled.div`
 `;
 
 const Caption = styled.div`
-  /* position: absolute; */
-  /* top: 0; */
-  width: 100%;
-  /* transform: translateY(calc(-100% - 16px)); */
+  max-width: 100%;
   text-align: center;
-  font-size: 16px;
-`;
+  margin-top: 2rem;
+  z-index: 1;
+
+  @media screen and (min-width: 800px) and (min-height: 421px) {
+    margin-top: 1rem;
+  `;
 
 const Title = styled.h1`
   display: block;
-  color: rgb(243, 182, 97);
-  font-size: ${rem(42)};
-  font-weight: bold;
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 500;
   font-family: ${headerFont};
   margin: 0;
 
   @media screen and (max-height: 420px) {
-    font-size: ${rem(32)};
+    font-size: 0.65rem;
   }
 `;
 
 const Slider = ({ previousSlide, currentSlide, nextSlide }) => (
   <Wrapper>
-    <Caption>
-      <Title>{currentSlide.title}</Title>
-      <Link inline href={currentSlide.link}>
-        {currentSlide.link}
-      </Link>
-    </Caption>
     <Section>
       <Nav prev>
         <Navigation previous item={previousSlide} />
@@ -227,6 +221,12 @@ const Slider = ({ previousSlide, currentSlide, nextSlide }) => (
             }}
           />
         </ImageSlider>
+        <Caption>
+          <Title>{currentSlide.title}</Title>
+          <Link inline href={currentSlide.link}>
+            {currentSlide.link}
+          </Link>
+        </Caption>
       </Body>
       <Nav>
         <Navigation item={nextSlide} />
